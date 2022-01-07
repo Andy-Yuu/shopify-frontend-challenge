@@ -5,7 +5,7 @@ import { LoadingButton } from '@mui/lab';
 import astronautImg from './resources/astronaut.jpeg';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
 function App() {
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -92,27 +92,24 @@ function App() {
         {images.map((image, index) => {
           return (
             <Grid item key={index}>
-              <Card sx={{ maxWidth: 400, height: 600 }} style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
+              <Card sx={{ maxWidth: 400, height: 550 }} style={{display: 'flex', flexDirection: 'column'}}>
+                <CardHeader 
+                  title={<Typography>{image.title}</Typography>}
+                  subheader={<Typography>{image.date}</Typography>}
+                  avatar={<img style={{height: '40px', width: '40px', borderRadius: '50%'}} src={astronautImg} alt='avatar'/>}
+                />
                 <CardMedia
                   component="img"
                   image={image.imageURL}
                   alt={image.title}
                   height='250'
                 />
-                <CardHeader title={image.title} subheader={<Typography>{image.date}</Typography>}/>
-                {image.description && (
-                  <CardContent sx={{ overflow: 'scroll'}} style={{ paddingTop: 0, paddingBottom: 0 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      {image.description}
-                    </Typography>
-                  </CardContent>
-                )}
                 <CardActions>
                   <IconButton onClick={() => handleLike(index)}>
                     {image.liked ? <FavoriteIcon style={{color: 'red'}}/> : <FavoriteBorderIcon/>}
                   </IconButton>
                   <IconButton onClick={() => handleShare(index)}>
-                    <ContentCopyIcon/>
+                    <SendOutlinedIcon/>
                     <Snackbar
                       anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                       open={open}
@@ -122,6 +119,13 @@ function App() {
                     </Snackbar>
                   </IconButton>
                 </CardActions>
+                {image.description && (
+                  <CardContent sx={{ overflow: 'scroll'}} style={{ paddingTop: 0, paddingBottom: 0 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      {image.description}
+                    </Typography>
+                  </CardContent>
+                )}
               </Card>
             </Grid>
           )
