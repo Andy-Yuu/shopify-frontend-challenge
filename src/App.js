@@ -68,7 +68,9 @@ function App() {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
-      <Typography variant='h4' style={{textAlign: 'center', margin: '20px 0', wordWrap: 'break-word'}}>Spacestagram: Image-sharing from the final frontier</Typography>
+      <Typography variant='h3' style={{fontFamily: 'Oleo Script, cursive', textAlign: 'center', margin: '20px 0', wordWrap: 'break-word'}}>
+        Spacestagram
+      </Typography>
       <LoadingButton
         onClick={getNASAData}
         loading={loading}
