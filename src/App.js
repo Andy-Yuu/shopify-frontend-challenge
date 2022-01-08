@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Card, CardMedia, CardContent, Typography, CardActions, CardHeader, IconButton, Snackbar, Alert } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { Grid, Card, CardMedia, CardContent, Typography, CardActions, CardHeader, IconButton } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 import astronautImg from './resources/astronaut.jpeg';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -13,7 +15,6 @@ function App() {
 
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const getNASAData = async () => {
     setLoading(true);
@@ -54,7 +55,14 @@ function App() {
 
   const handleShare = (index) => {
     navigator.clipboard.writeText(images[index].imageURL);
-    setOpen(true);
+    toast.success(`Image link of ${images[index].title} copied to clipboard!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      });
   }
 
   useEffect(() => {
@@ -68,6 +76,7 @@ function App() {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
+      <ToastContainer />
       <Typography variant='h3' style={{fontFamily: 'Oleo Script, cursive', textAlign: 'center', margin: '20px 0', wordWrap: 'break-word'}}>
         Spacestagram
       </Typography>
@@ -110,13 +119,6 @@ function App() {
                   </IconButton>
                   <IconButton onClick={() => handleShare(index)}>
                     <SendOutlinedIcon/>
-                    <Snackbar
-                      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                      open={open}
-                      onClose={() => setOpen(false)}
-                    >
-                      <Alert severity="success">Image link copied to clipboard!</Alert>
-                    </Snackbar>
                   </IconButton>
                 </CardActions>
                 {image.description && (
